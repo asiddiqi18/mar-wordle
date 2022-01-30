@@ -18,6 +18,7 @@ class Keyboard extends Component {
                     key={char.id}
                     letter={char}
                     onKeyPress={this.props.onKeyPress}
+                    onBackSpace={this.props.onBackSpace}
                   >
                     {char}
                   </Key>
@@ -31,6 +32,7 @@ class Keyboard extends Component {
                     key={char.id}
                     letter={char}
                     onKeyPress={this.props.onKeyPress}
+                    onBackSpace={this.props.onBackSpace}
                   >
                     {char}
                   </Key>
@@ -44,6 +46,8 @@ class Keyboard extends Component {
                     key={char.id}
                     letter={char}
                     onKeyPress={this.props.onKeyPress}
+                    onBackSpace={this.props.onBackSpace}
+                    onEnter={this.props.onEnter}
                   >
                     {char}
                   </Key>

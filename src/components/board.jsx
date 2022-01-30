@@ -10,10 +10,8 @@ class Board extends Component {
     console.log(wordsList);
     var paddedList = _.cloneDeep(wordsList);
     if (paddedList.length > 0) {
-      console.log("(A)");
       var lengthOfLastWord = paddedList[paddedList.length - 1].length;
       if (lengthOfLastWord < 5) {
-        console.log("(B)");
         paddedList[paddedList.length - 1] += " ".repeat(5 - lengthOfLastWord);
       }
     }
