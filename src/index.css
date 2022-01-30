@@ -10,8 +10,8 @@
     height: 50px !important;
   }
 
-  .slot {
-    
+  .success {
+    background-color: green !important;
   }
 }
 

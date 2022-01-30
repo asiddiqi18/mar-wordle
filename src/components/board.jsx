@@ -5,27 +5,33 @@ import BoardRow from "./boardRow";
 class Board extends Component {
   state = {};
 
-  addPadding(wordsList) {
+  addPadding() {
     console.log("addPadding: ");
-    console.log(wordsList);
-    var paddedList = _.cloneDeep(wordsList);
-    if (paddedList.length > 0) {
-      var lengthOfLastWord = paddedList[paddedList.length - 1].length;
-      if (lengthOfLastWord < 5) {
-        paddedList[paddedList.length - 1] += " ".repeat(5 - lengthOfLastWord);
-      }
+    var paddedList = [];
+
+
+    for (let index = 0; index < this.props.guessNumber; index++) {
+      paddedList.push(this.props.board[index].guess)
     }
-    while (paddedList.length < 5) {
-      paddedList.push(" ".repeat(5));
+
+    let latestGuess = this.props.board[this.props.guessNumber].guess
+    let lengthOfLatestGuess = latestGuess.length
+    paddedList.push(latestGuess += " ".repeat(5 - lengthOfLatestGuess))
+
+    for (let index = this.props.guessNumber + 1; index < 5; index++) {
+      paddedList.push(" ".repeat(5))
     }
-    console.log(paddedList);
+
+    console.log(paddedList)
+
     return paddedList;
+
   }
 
   render() {
     return (
       <React.Fragment>
-        {this.addPadding(this.props.board).map((word, index) => (
+        {this.addPadding().map((word, index) => (
           <BoardRow key={index} word={word}></BoardRow>
         ))}
       </React.Fragment>
