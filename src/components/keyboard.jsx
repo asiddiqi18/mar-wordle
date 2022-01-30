@@ -14,7 +14,11 @@ class Keyboard extends Component {
             <tr className="keyboard-row ">
               {this.topRow.map((char) => (
                 <td className="align-middle">
-                  <Key key={char.charCodeAt(0)} letter={char}>
+                  <Key
+                    key={char.id}
+                    letter={char}
+                    onKeyPress={this.props.onKeyPress}
+                  >
                     {char}
                   </Key>
                 </td>
@@ -23,20 +27,28 @@ class Keyboard extends Component {
             <tr className="keyboard-row">
               {this.midRow.map((char) => (
                 <td>
-                  <Key key={char.charCodeAt(0)} letter={char}>
+                  <Key
+                    key={char.id}
+                    letter={char}
+                    onKeyPress={this.props.onKeyPress}
+                  >
                     {char}
                   </Key>
                 </td>
               ))}
             </tr>
             <tr className="keyboard-row">
-                {this.bottomRow.map((char) => (
-              <td>
-                  <Key key={char.charCodeAt(0)} letter={char}>
+              {this.bottomRow.map((char) => (
+                <td>
+                  <Key
+                    key={char.id}
+                    letter={char}
+                    onKeyPress={this.props.onKeyPress}
+                  >
                     {char}
                   </Key>
-              </td>
-                ))}
+                </td>
+              ))}
             </tr>
           </tbody>
         </table>

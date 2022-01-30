@@ -4,15 +4,16 @@ import React, { Component } from "react";
 class Key extends Component {
   state = {};
 
+  
 
   createKeyButton() {
 
-    if (this.props.letter == "back") {
-        return <button type="button" className="btn btn-danger btn-special btn-lg m-1">Back</button>
-    } else if (this.props.letter == "enter") {
-        return <button type="button" className="btn btn-success btn-special btn-lg m-1">Enter</button>
+    if (this.props.letter === "back") {
+        return <button onClick={() => this.props.onKeyPress(this.props.letter)} type="button" className="me-1 btn btn-danger btn-special btn">Back</button>
+    } else if (this.props.letter === "enter") {
+        return <button onClick={() => this.props.onKeyPress(this.props.letter)} type="button" className="ms-1 btn btn-success btn-special btn">Enter</button>
     } else {
-        return <button type="button" className="btn btn-light btn-key btn-lg m-1">{this.props.letter}</button>
+        return <button onClick={() => this.props.onKeyPress(this.props.letter)} type="button" className="btn btn-light btn-key btn">{this.props.letter}</button>
     }
   }
 
