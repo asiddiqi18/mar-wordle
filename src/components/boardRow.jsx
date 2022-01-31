@@ -49,7 +49,7 @@ class BoardRow extends Component {
 
   render() {
     return (
-      <ul className="list-group list-group-horizontal">
+      <ul className="list-group list-group-horizontal justify-content-center">
         {this.addColor()}
         {/* {this.props.word.guess.split("").map((char, index) => (
           <li key={index} className="btn-key list-group-item">{char}</li>

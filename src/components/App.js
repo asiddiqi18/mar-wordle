@@ -207,8 +207,6 @@ class App extends Component {
   render() {
     return (
       <React.Fragment>
-        <h1>The answer is {this.state.answer}</h1>
-
         <Row>
           <Col xs={6}>
             <ToastContainer className="m-3" position="top-center">
@@ -226,18 +224,21 @@ class App extends Component {
 
         {this.gameOverModal()}
 
-        <div className="container">
-          <div className="mt-5">
-            <Board
-              board={this.state.board}
-              guessNumber={this.state.guessNumber}
-            ></Board>
-            <Keyboard
-              onKeyPress={this.handleKeyPress}
-              onBackSpace={this.handleBackspace}
-              onEnter={this.handleEnter}
-              charStatus={this.state.charStatus}
-            ></Keyboard>
+        <div className="container d-flex aligns-items-center justify-content-center">
+          <div>
+            <h1 className="text-center">The answer is {this.state.answer}</h1>
+            <div className="mt-5">
+              <Board
+                board={this.state.board}
+                guessNumber={this.state.guessNumber}
+              ></Board>
+              <Keyboard
+                onKeyPress={this.handleKeyPress}
+                onBackSpace={this.handleBackspace}
+                onEnter={this.handleEnter}
+                charStatus={this.state.charStatus}
+              ></Keyboard>
+            </div>
           </div>
         </div>
       </React.Fragment>
