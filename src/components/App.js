@@ -1,13 +1,36 @@
 import React, { Component, useState } from "react";
 import Board from "./board";
 import Keyboard from "./keyboard";
-import { Button, Modal } from "react-bootstrap";
-import getWord from "../wordPicker";
+import {
+  Button,
+  Modal,
+  Toast,
+  Row,
+  Col,
+  ToastContainer,
+} from "react-bootstrap";
+import { getWord } from "../utils/wordPicker";
+import { isWord } from "../utils/wordApi";
 
 class App extends Component {
   constructor(props) {
     super(props);
-    this.state = {
+    this.state = this.initialState;
+
+    this.handleKeyPress = this.handleKeyPress.bind(this);
+    this.handleBackspace = this.handleBackspace.bind(this);
+    this.handleEnter = this.handleEnter.bind(this);
+    this.showModal = this.showModal.bind(this);
+    this.hideModal = this.hideModal.bind(this);
+    this.handleReset = this.handleReset.bind(this);
+  }
+
+  resetBuilder() {
+    this.setState(this.initialState);
+  }
+
+  get initialState() {
+    return {
       board: [
         {
           guess: "",
@@ -31,7 +54,9 @@ class App extends Component {
         },
       ],
       guessNumber: 0,
-      showGameOverModal: false,
+      gameOverModalDisplayed: false,
+      alertDisplayed: false,
+      alertMsg: undefined,
       gameWon: false,
       answer: getWord(),
       charStatus: {
@@ -40,23 +65,26 @@ class App extends Component {
         wrongChars: [],
       },
     };
-
-    this.handleKeyPress = this.handleKeyPress.bind(this);
-    this.handleBackspace = this.handleBackspace.bind(this);
-    this.handleEnter = this.handleEnter.bind(this);
-    this.showModal = this.showModal.bind(this);
-    this.hideModal = this.hideModal.bind(this);
   }
 
   showModal() {
-    this.setState({ showGameOverModal: true });
+    this.setState({ gameOverModalDisplayed: true });
   }
 
   hideModal() {
-    this.setState({ showGameOverModal: false });
+    this.setState({ gameOverModalDisplayed: false });
+  }
+
+  setAlertShown(bool, msg) {
+    this.setState({ alertMsg: msg });
+    this.setState({ alertDisplayed: bool });
   }
 
   handleKeyPress(letter) {
+    if (this.state.gameWon) {
+      return;
+    }
+
     console.log(`Key pressed: ${letter}`);
     console.log(
       `Guess length: ${
@@ -84,6 +112,10 @@ class App extends Component {
   }
 
   handleEnter() {
+    if (this.state.gameWon) {
+      return;
+    }
+
     console.log("Handling enter...");
     let enteredGuess = this.state.board[this.state.guessNumber].guess;
 
@@ -94,45 +126,53 @@ class App extends Component {
       this.showModal();
     }
 
-    if (enteredGuess.length === 5) {
-      this.setState({ guessNumber: this.state.guessNumber + 1 });
-      console.log("Pushing to board...");
-
-      // for (let index = 0; index < 5; index++) {
-      //   if (enteredGuess[index] === this.state.answer[index].toUpperCase()) {
-      //     console.log(`Found a match of ${enteredGuess[index]} at index ${index}`)
-      //   }
-      // }
-
-      var resultsList = [];
-
-      for (let index = 0; index < 5; index++) {
-        var indexFound = this.state.answer.indexOf(enteredGuess[index]);
-        if (indexFound === index) {
-          resultsList.push("success");
-          this.state.charStatus.successChars.push(enteredGuess[index]);
-        } else if (indexFound !== -1) {
-          this.state.charStatus.partialChars.push(enteredGuess[index]);
-          resultsList.push("partial");
-        } else {
-          this.state.charStatus.wrongChars.push(enteredGuess[index]);
-          resultsList.push("wrong");
-        }
-      }
-
-      // console.log(`resultsList = ${resultsList}`)
-
-      this.state.board[this.state.guessNumber].match = resultsList;
-      super.setState(this.state.board);
-
-      console.log(this.state);
+    if (enteredGuess.length !== 5) {
+      this.setAlertShown(true, "Not enough letters");
+      return;
     }
+
+    if (!isWord(enteredGuess)) {
+      this.setAlertShown(true, "Not a valid word");
+      return;
+    }
+
+    this.setState({ guessNumber: this.state.guessNumber + 1 });
+    console.log("Pushing to board...");
+
+    var resultsList = [];
+
+    let wordSet = new Set(this.state.answer.split(""));
+
+    for (let index = 0; index < 5; index++) {
+      if (enteredGuess[index] === this.state.answer[index]) {
+        // success
+        this.state.charStatus.successChars.push(enteredGuess[index]);
+        resultsList.push("success");
+      } else if (wordSet.has(enteredGuess[index])) {
+        // partial
+        this.state.charStatus.partialChars.push(enteredGuess[index]);
+        resultsList.push("partial");
+      } else {
+        // fail
+        this.state.charStatus.wrongChars.push(enteredGuess[index]);
+        resultsList.push("wrong");
+      }
+    }
+
+    this.state.board[this.state.guessNumber].match = resultsList;
+    super.setState(this.state.board);
+  }
+
+  handleReset() {
+    console.log("TEST");
+    this.hideModal();
+    this.resetBuilder();
   }
 
   gameOverModal() {
     if (this.state.gameWon) {
       return (
-        <Modal show={this.state.showGameOverModal} onHide={this.hideModal}>
+        <Modal show={this.state.gameOverModalDisplayed} onHide={this.hideModal}>
           <Modal.Header closeButton>
             <Modal.Title>Congrats! You won!</Modal.Title>
           </Modal.Header>
@@ -141,19 +181,23 @@ class App extends Component {
             guesses.
           </Modal.Body>
           <Modal.Footer>
-            <Button variant="primary">Restart</Button>
+            <Button variant="primary" onClick={this.handleReset}>
+              Restart
+            </Button>
           </Modal.Footer>
         </Modal>
       );
     } else {
       return (
-        <Modal show={this.state.showGameOverModal} onHide={this.hideModal}>
+        <Modal show={this.state.gameOverModalDisplayed} onHide={this.hideModal}>
           <Modal.Header closeButton>
-            <Modal.Title>Fuck! You lost!</Modal.Title>
+            <Modal.Title>Oh no! You lost!</Modal.Title>
           </Modal.Header>
           <Modal.Body>The word was {this.state.answer}</Modal.Body>
           <Modal.Footer>
-            <Button variant="primary">Restart</Button>
+            <Button variant="primary" onClick={this.handleReset}>
+              Restart
+            </Button>
           </Modal.Footer>
         </Modal>
       );
@@ -164,7 +208,24 @@ class App extends Component {
     return (
       <React.Fragment>
         <h1>The answer is {this.state.answer}</h1>
+
+        <Row>
+          <Col xs={6}>
+            <ToastContainer className="m-3" position="top-center">
+              <Toast
+                onClose={() => this.setAlertShown(false)}
+                show={this.state.alertDisplayed}
+                delay={3000}
+                autohide
+              >
+                <Toast.Body>{this.state.alertMsg}</Toast.Body>
+              </Toast>
+            </ToastContainer>
+          </Col>
+        </Row>
+
         {this.gameOverModal()}
+
         <div className="container">
           <div className="mt-5">
             <Board
