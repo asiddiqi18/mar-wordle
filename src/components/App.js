@@ -224,7 +224,7 @@ class App extends Component {
 
         {this.gameOverModal()}
 
-        <div className="container d-flex aligns-items-center justify-content-center">
+        <div className="d-flex align-items-center justify-content-center min-vh-100">
           <div>
             <h1 className="text-center">The answer is {this.state.answer}</h1>
             <div className="mt-5">
