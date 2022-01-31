@@ -10,9 +10,6 @@
     height: 50px !important;
   }
 
-  .success {
-    background-color: green !important;
-  }
 }
 
 @media (max-width: 768px) {
@@ -36,4 +33,12 @@
 
 .guess-row {
     background-color: gray;
+}
+
+.success {
+  background-color: green !important;
+}
+
+.partial {
+  background-color: yellow !important;
 }

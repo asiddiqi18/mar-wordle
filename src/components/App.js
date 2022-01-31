@@ -1,7 +1,6 @@
 import React, { Component } from "react";
 import Board from "./board";
 import Keyboard from "./keyboard";
-import _ from "lodash";
 
 class App extends Component {
   constructor(props) {
@@ -10,26 +9,27 @@ class App extends Component {
       board: [
         {
           guess: "",
-          match: "nnnnn",
+          match: [],
         },
         {
           guess: "",
-          match: "nnnnn",
+          match: [],
         },
         {
           guess: "",
-          match: "nnnnn",
+          match: [],
         },
         {
           guess: "",
-          match: "nnnnn",
+          match: [],
         },
         {
           guess: "",
-          match: "nnnnn",
+          match: [],
         },
       ],
       guessNumber: 0,
+      answer: "MOUNT"
     };
     this.handleKeyPress = this.handleKeyPress.bind(this);
     this.handleBackspace = this.handleBackspace.bind(this);
@@ -44,17 +44,10 @@ class App extends Component {
       } Guess number: ${this.state.guessNumber}`
     );
 
-    if (this.state.board[this.state.guessNumber].guess.length != 5) {
+    if (this.state.board[this.state.guessNumber].guess.length !== 5) {
       this.state.board[this.state.guessNumber].guess += letter;
       super.setState(this.state.board);
     }
-
-    // if (this.state.board[this.state.guess].length != 5) {
-    //   console.log(`Adding letter to guess... ${this.state.guess}`);
-    //   this.state.board[this.state.guess] += letter;
-    //   super.setState(this.state.board);
-    //   console.log(this.state.board[this.state.guess]);
-    // }
   }
 
   handleBackspace() {
@@ -68,9 +61,45 @@ class App extends Component {
 
   handleEnter() {
     console.log("Handling enter...");
-    if (this.state.board[this.state.guessNumber].guess.length == 5) {
-      this.state.guessNumber += 1;
+    let enteredGuess = this.state.board[this.state.guessNumber].guess
+
+    if (enteredGuess === this.state.answer) {
+      console.log("Congrats, you won!")
+    }
+    else if (this.state.guessNumber == 4) {
+      console.log("You lost 🤣")
+    }
+
+    if (enteredGuess.length === 5) {
+      this.setState({guessNumber: this.state.guessNumber + 1})
       console.log("Pushing to board...");
+
+      // for (let index = 0; index < 5; index++) {
+      //   if (enteredGuess[index] === this.state.answer[index].toUpperCase()) {
+      //     console.log(`Found a match of ${enteredGuess[index]} at index ${index}`)
+      //   }
+      // }
+
+      var resultsList = []
+
+      for (let index = 0; index < 5; index++) {
+        var indexFound = this.state.answer.indexOf(enteredGuess[index])
+        if (indexFound === index) {
+          resultsList.push("success")
+        } else if (indexFound !== -1) {
+          resultsList.push("partial")
+        } else {
+          resultsList.push("wrong")
+        }
+      }
+
+      // console.log(`resultsList = ${resultsList}`)
+
+      this.state.board[this.state.guessNumber].match = resultsList;
+      super.setState(this.state.board);
+
+      console.log(this.state)
+
     }
   }
 
