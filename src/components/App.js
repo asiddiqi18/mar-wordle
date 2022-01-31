@@ -2,6 +2,7 @@ import React, { Component, useState } from "react";
 import Board from "./board";
 import Keyboard from "./keyboard";
 import { Button, Modal } from "react-bootstrap";
+import getWord from "../wordPicker";
 
 class App extends Component {
   constructor(props) {
@@ -32,7 +33,12 @@ class App extends Component {
       guessNumber: 0,
       showGameOverModal: false,
       gameWon: false,
-      answer: "MOUNT",
+      answer: getWord(),
+      charStatus: {
+        successChars: [],
+        partialChars: [],
+        wrongChars: [],
+      },
     };
 
     this.handleKeyPress = this.handleKeyPress.bind(this);
@@ -65,9 +71,8 @@ class App extends Component {
   }
 
   handleBackspace() {
-
     if (this.state.guessNumber == 4) {
-      return
+      return;
     }
 
     console.log("Handling back space...");
@@ -83,12 +88,10 @@ class App extends Component {
     let enteredGuess = this.state.board[this.state.guessNumber].guess;
 
     if (enteredGuess === this.state.answer) {
-      console.log("Congrats, you won!");
       super.setState({ gameWon: true });
       this.showModal();
     } else if (this.state.guessNumber == 4) {
-      console.log("You lost 🤣");
-      this.showModal()
+      this.showModal();
     }
 
     if (enteredGuess.length === 5) {
@@ -107,9 +110,12 @@ class App extends Component {
         var indexFound = this.state.answer.indexOf(enteredGuess[index]);
         if (indexFound === index) {
           resultsList.push("success");
+          this.state.charStatus.successChars.push(enteredGuess[index]);
         } else if (indexFound !== -1) {
+          this.state.charStatus.partialChars.push(enteredGuess[index]);
           resultsList.push("partial");
         } else {
+          this.state.charStatus.wrongChars.push(enteredGuess[index]);
           resultsList.push("wrong");
         }
       }
@@ -157,6 +163,7 @@ class App extends Component {
   render() {
     return (
       <React.Fragment>
+        <h1>The answer is {this.state.answer}</h1>
         {this.gameOverModal()}
         <div className="container">
           <div className="mt-5">
@@ -168,6 +175,7 @@ class App extends Component {
               onKeyPress={this.handleKeyPress}
               onBackSpace={this.handleBackspace}
               onEnter={this.handleEnter}
+              charStatus={this.state.charStatus}
             ></Keyboard>
           </div>
         </div>

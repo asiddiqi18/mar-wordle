@@ -24,17 +24,31 @@ class Key extends Component {
           Enter
         </button>
       );
-    } else {
-      return (
-        <button
-          onClick={() => this.props.onKeyPress(this.props.letter)}
-          type="button"
-          className="btn btn-light btn-key btn"
-        >
-          {this.props.letter}
-        </button>
-      );
     }
+
+    var classStatus = ""
+    switch(this.props.status) {
+      case 1:
+        classStatus += "success"
+        break;
+      case 2:
+        classStatus += "partial"
+        break;
+      case 3:
+        classStatus += "wrong"
+        break;                  
+  }
+
+    return (
+      <button
+        onClick={() => this.props.onKeyPress(this.props.letter)}
+        type="button"
+        className={"btn btn-light btn-key " + classStatus}
+      >
+        {this.props.letter}
+      </button>
+    );
+
   }
 
   render() {
