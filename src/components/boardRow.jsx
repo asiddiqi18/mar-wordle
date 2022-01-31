@@ -1,26 +1,50 @@
 import React, { Component } from "react";
 
-import _ from "lodash"
+import _ from "lodash";
 
 class BoardRow extends Component {
   state = {};
 
-
   addColor() {
-
-    let items = []
+    let items = [];
 
     _.times(5, (i) => {
-      if (this.props.word.match[i] === "success") {
-        items.push(<li key={i} className="btn-key list-group-item success">{this.props.word.guess[i]}</li>)
-      } else if (this.props.word.match[i] === "partial") {
-        items.push(<li key={i} className="btn-key list-group-item partial">{this.props.word.guess[i]}</li>)
-      } else {
-        items.push(<li key={i} className="btn-key list-group-item">{this.props.word.guess[i]}</li>)
-      }
-    })
+      switch (this.props.word.match[i]) {
+        case "success":
+          items.push(
+            <li key={i} className="btn-key list-group-item success">
+              {this.props.word.guess[i]}
+            </li>
+          );
+          break;
+        case "partial":
+          items.push(
+            <li key={i} className="btn-key list-group-item partial">
+              {this.props.word.guess[i]}
+            </li>
+          );
 
-    return items
+          break;
+        case "wrong":
+          items.push(
+            <li key={i} className="btn-key list-group-item fail">
+              {this.props.word.guess[i]}
+            </li>
+          );
+
+          break;
+        default:
+          items.push(
+            <li key={i} className="btn-key list-group-item">
+              {this.props.word.guess[i]}
+            </li>
+          );
+
+          break;
+      }
+    });
+
+    return items;
   }
 
   render() {

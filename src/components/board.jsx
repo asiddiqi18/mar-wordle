@@ -13,6 +13,10 @@ class Board extends Component {
       paddedList.push({guess: this.props.board[index].guess, match: this.props.board[index].match})
     }
 
+    if (this.props.guessNumber == 5) {
+      return paddedList
+    }
+
     let latestGuess = this.props.board[this.props.guessNumber].guess
     let lengthOfLatestGuess = latestGuess.length
     paddedList.push({guess: latestGuess += " ".repeat(5 - lengthOfLatestGuess), match: []})

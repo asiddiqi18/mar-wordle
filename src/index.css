@@ -42,3 +42,7 @@
 .partial {
   background-color: yellow !important;
 }
+
+.fail {
+  background-color: gray !important;
+}
