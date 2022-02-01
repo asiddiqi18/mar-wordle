@@ -1,4 +1,4 @@
-import React, { Component, useState } from "react";
+import React, { Component, useState, useEffect } from "react";
 import Board from "./board";
 import Keyboard from "./keyboard";
 import {
@@ -13,6 +13,7 @@ import { getWord } from "../utils/wordPicker";
 import { isWord } from "../utils/wordApi";
 
 class App extends Component {
+  
   constructor(props) {
     super(props);
     this.state = this.initialState;
@@ -23,6 +24,7 @@ class App extends Component {
     this.showModal = this.showModal.bind(this);
     this.hideModal = this.hideModal.bind(this);
     this.handleReset = this.handleReset.bind(this);
+
   }
 
   resetBuilder() {
@@ -99,7 +101,8 @@ class App extends Component {
   }
 
   handleBackspace() {
-    if (this.state.guessNumber == 4) {
+    if (this.state.guessNumber == 5) {
+      console.log("Out of guesses ")
       return;
     }
 
@@ -129,6 +132,14 @@ class App extends Component {
     if (enteredGuess.length !== 5) {
       this.setAlertShown(true, "Not enough letters");
       return;
+    }
+
+    for (let index = 0; index < this.state.guessNumber; index++) {
+      const prevGuess = this.state.board[index].guess;
+      if (prevGuess === enteredGuess) {
+        this.setAlertShown(true, "You have already guessed this");
+        return
+      }
     }
 
     if (!isWord(enteredGuess)) {
@@ -205,8 +216,9 @@ class App extends Component {
   }
 
   render() {
+    console.log("the word is " + this.state.answer)
     return (
-      <React.Fragment>
+      <div>
         <Row>
           <Col xs={6}>
             <ToastContainer className="m-3" position="top-center">
@@ -224,24 +236,26 @@ class App extends Component {
 
         {this.gameOverModal()}
 
-        <div className="d-flex align-items-center justify-content-center min-vh-100">
-          <div>
-            <h1 className="text-center">The answer is {this.state.answer}</h1>
-            <div className="mt-5">
-              <Board
-                board={this.state.board}
-                guessNumber={this.state.guessNumber}
-              ></Board>
-              <Keyboard
-                onKeyPress={this.handleKeyPress}
-                onBackSpace={this.handleBackspace}
-                onEnter={this.handleEnter}
-                charStatus={this.state.charStatus}
-              ></Keyboard>
-            </div>
+        <div class="d-flex align-items-center justify-content-center flex-column min-vh-100">
+          <div className="mt-5">
+            <h1 className="text-center">Mar's Wordle</h1>
+          </div>
+          <div class="mt-auto">
+            <Board
+              board={this.state.board}
+              guessNumber={this.state.guessNumber}
+            ></Board>
+          </div>
+          <div class="mt-auto bottom-margin">
+            <Keyboard
+              onKeyPress={this.handleKeyPress}
+              onBackSpace={this.handleBackspace}
+              onEnter={this.handleEnter}
+              charStatus={this.state.charStatus}
+            ></Keyboard>
           </div>
         </div>
-      </React.Fragment>
+      </div>
     );
   }
 }

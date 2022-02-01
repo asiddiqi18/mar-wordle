@@ -1,13 +1,13 @@
 @media (min-width: 300px) {
   .btn-key {
-    width: 50px !important;
-    height: 50px !important;
+    width: 60px !important;
+    height: 60px !important;
     margin: 4px !important;
   }
 
   .btn-special {
     width: 84px !important;
-    height: 50px !important;
+    height: 60px !important;
   }
 
 }
@@ -36,13 +36,37 @@
 }
 
 .success {
-  background-color: green !important;
+  background-color: #6aff81 !important;
 }
 
 .partial {
-  background-color: yellow !important;
+  background-color: #ffff6a !important;
 }
 
 .wrong {
-  background-color: gray !important;
+  background-color: #f3f3f2 !important;
+}
+
+.bottom-margin {
+  margin-bottom: 8%;
+}
+
+.tile {
+  border: 1px solid black;
+  font-size: 34px;
+  width: 75px !important;
+  height: 75px !important;
+  line-height: 75px;
+  text-align: center;
+  border-radius: 7px;
+  font-family: 'JetBrains Mono', monospace;
+  
+}
+
+.grid-container {
+  display: grid;
+  
+  grid-template-columns: auto auto auto auto auto;
+  grid-gap: 10px;
+  padding: 10px;
 }

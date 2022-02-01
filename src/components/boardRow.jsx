@@ -12,32 +12,32 @@ class BoardRow extends Component {
       switch (this.props.word.match[i]) {
         case "success":
           items.push(
-            <li key={i} className="btn-key list-group-item success">
+            <div key={i} className="btn-key tile success">
               {this.props.word.guess[i]}
-            </li>
+            </div>
           );
           break;
         case "partial":
           items.push(
-            <li key={i} className="btn-key list-group-item partial">
+            <div key={i} className="btn-key tile partial">
               {this.props.word.guess[i]}
-            </li>
+            </div>
           );
 
           break;
         case "wrong":
           items.push(
-            <li key={i} className="btn-key list-group-item fail">
+            <div key={i} className="btn-key tile wrong">
               {this.props.word.guess[i]}
-            </li>
+            </div>
           );
 
           break;
         default:
           items.push(
-            <li key={i} className="btn-key list-group-item">
+            <div key={i} className="btn-key tile">
               {this.props.word.guess[i]}
-            </li>
+            </div>
           );
 
           break;
@@ -49,12 +49,9 @@ class BoardRow extends Component {
 
   render() {
     return (
-      <ul className="list-group list-group-horizontal justify-content-center">
+      <div className="grid-container">
         {this.addColor()}
-        {/* {this.props.word.guess.split("").map((char, index) => (
-          <li key={index} className="btn-key list-group-item">{char}</li>
-        ))} */}
-      </ul>
+      </div>
     );
   }
 }
