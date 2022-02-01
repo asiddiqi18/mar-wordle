@@ -3,13 +3,13 @@
     width: 60px !important;
     height: 60px !important;
     margin: 4px !important;
+    filter: drop-shadow(0 0.18rem 0.18rem rgba(0, 0, 0, 0.2));
   }
 
   .btn-special {
     width: 84px !important;
     height: 60px !important;
   }
-
 }
 
 @media (max-width: 768px) {
@@ -20,6 +20,7 @@
     margin: 2px !important;
     height: 47px !important;
     font-size: 9px !important;
+    filter: drop-shadow(0 0.2rem 0.25rem rgba(0, 0, 0, 0.2));
   }
 
   .btn-special {
@@ -32,19 +33,29 @@
 }
 
 .guess-row {
-    background-color: gray;
+  background-color: gray;
 }
 
 .success {
   background-color: #6aff81 !important;
+  border-color: #6aff81 !important;
 }
 
 .partial {
   background-color: #ffff6a !important;
+  border-color: #ffff6a !important;
+
 }
 
 .wrong {
   background-color: #f3f3f2 !important;
+  border-color: #f3f3f2 !important;
+}
+
+.wrong-key {
+  background-color: #c6c6c6 !important;
+  border-color: #c6c6c6 !important;
+
 }
 
 .bottom-margin {
@@ -59,14 +70,29 @@
   line-height: 75px;
   text-align: center;
   border-radius: 7px;
-  font-family: 'JetBrains Mono', monospace;
-  
+  font-family: "JetBrains Mono", monospace;
+  filter: drop-shadow(0 0.2rem 0.25rem rgba(0, 0, 0, 0.2));
 }
 
 .grid-container {
   display: grid;
-  
+
   grid-template-columns: auto auto auto auto auto;
   grid-gap: 10px;
   padding: 10px;
+}
+
+body {
+  background: rgb(158, 46, 255);
+  background: linear-gradient(
+    90deg,
+    rgba(158, 46, 255, 0.541036482952556) 0%,
+    rgba(49, 220, 255, 0.5970588919161415) 100%
+  );
+}
+
+.title {
+  font-family: "JetBrains Mono", monospace;
+  font-size: 50px;
+  font-weight: 800;
 }

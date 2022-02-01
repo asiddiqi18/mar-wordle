@@ -35,7 +35,7 @@ class Key extends Component {
         classStatus += "partial"
         break;
       case 3:
-        classStatus += "wrong"
+        classStatus += "wrong-key"
         break;                  
   }
 

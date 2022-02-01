@@ -238,7 +238,7 @@ class App extends Component {
 
         <div class="d-flex align-items-center justify-content-center flex-column min-vh-100">
           <div className="mt-5">
-            <h1 className="text-center">Mar's Wordle</h1>
+            <h1 className="text-center title">Mar's Wordle</h1>
           </div>
           <div class="mt-auto">
             <Board
