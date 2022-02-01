@@ -1,3 +1,7 @@
+.btn-key:hover {
+  background-color: #d9d9d9 !important;
+}
+
 @media (min-width: 300px) {
   .btn-key {
     width: 60px !important;
@@ -41,10 +45,14 @@
   border-color: #6aff81 !important;
 }
 
+.success-light {
+  background-color: #b2ffbe !important;
+  border-color: #b2ffbe !important;
+}
+
 .partial {
   background-color: #ffff6a !important;
   border-color: #ffff6a !important;
-
 }
 
 .wrong {
@@ -55,7 +63,6 @@
 .wrong-key {
   background-color: #c6c6c6 !important;
   border-color: #c6c6c6 !important;
-
 }
 
 .bottom-margin {
@@ -71,7 +78,7 @@
   text-align: center;
   border-radius: 7px;
   font-family: "JetBrains Mono", monospace;
-  filter: drop-shadow(0 0.2rem 0.25rem rgba(0, 0, 0, 0.2));
+  box-shadow: 1px 1px 1px 1px rgba(0, 0, 0, 0.1);
 }
 
 .grid-container {
@@ -95,4 +102,8 @@ body {
   font-family: "JetBrains Mono", monospace;
   font-size: 50px;
   font-weight: 800;
+}
+
+.shadow {
+  filter: drop-shadow(0 0.2rem 0.25rem rgba(0, 0, 0, 0.2));
 }

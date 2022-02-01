@@ -12,14 +12,14 @@ class BoardRow extends Component {
       switch (this.props.word.match[i]) {
         case "success":
           items.push(
-            <div key={i} className="btn-key tile success">
+            <div key={i} className="tile shadow success">
               {this.props.word.guess[i]}
             </div>
           );
           break;
         case "partial":
           items.push(
-            <div key={i} className="btn-key tile partial">
+            <div key={i} className="tile shadow partial">
               {this.props.word.guess[i]}
             </div>
           );
@@ -27,7 +27,7 @@ class BoardRow extends Component {
           break;
         case "wrong":
           items.push(
-            <div key={i} className="btn-key tile wrong">
+            <div key={i} className="tile shadow wrong">
               {this.props.word.guess[i]}
             </div>
           );
@@ -35,7 +35,7 @@ class BoardRow extends Component {
           break;
         default:
           items.push(
-            <div key={i} className="btn-key tile">
+            <div key={i} className="tile">
               {this.props.word.guess[i]}
             </div>
           );

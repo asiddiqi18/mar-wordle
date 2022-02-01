@@ -13,7 +13,6 @@ import { getWord } from "../utils/wordPicker";
 import { isWord } from "../utils/wordApi";
 
 class App extends Component {
-  
   constructor(props) {
     super(props);
     this.state = this.initialState;
@@ -24,7 +23,6 @@ class App extends Component {
     this.showModal = this.showModal.bind(this);
     this.hideModal = this.hideModal.bind(this);
     this.handleReset = this.handleReset.bind(this);
-
   }
 
   resetBuilder() {
@@ -102,7 +100,7 @@ class App extends Component {
 
   handleBackspace() {
     if (this.state.guessNumber == 5) {
-      console.log("Out of guesses ")
+      console.log("Out of guesses ");
       return;
     }
 
@@ -138,7 +136,7 @@ class App extends Component {
       const prevGuess = this.state.board[index].guess;
       if (prevGuess === enteredGuess) {
         this.setAlertShown(true, "You have already guessed this");
-        return
+        return;
       }
     }
 
@@ -184,18 +182,24 @@ class App extends Component {
     if (this.state.gameWon) {
       return (
         <Modal show={this.state.gameOverModalDisplayed} onHide={this.hideModal}>
-          <Modal.Header closeButton>
-            <Modal.Title>Congrats! You won!</Modal.Title>
-          </Modal.Header>
-          <Modal.Body>
-            You guessed the word {this.state.answer} in {this.state.guessNumber}{" "}
-            guesses.
+          <Modal.Body className="success-light p-5">
+            <h3 className="text-center">Congrats! You won!</h3>
+            <div className="row">
+              <p className="text-center">
+                You guessed the word {this.state.answer} in {this.state.guessNumber}{" "}
+                guesses.
+              </p>
+            </div>
+            <div class="row mt-5">
+              <Button
+                variant="light"
+                className="success shadow"
+                onClick={this.handleReset}
+              >
+                Restart
+              </Button>
+            </div>
           </Modal.Body>
-          <Modal.Footer>
-            <Button variant="primary" onClick={this.handleReset}>
-              Restart
-            </Button>
-          </Modal.Footer>
         </Modal>
       );
     } else {
@@ -206,7 +210,11 @@ class App extends Component {
           </Modal.Header>
           <Modal.Body>The word was {this.state.answer}</Modal.Body>
           <Modal.Footer>
-            <Button variant="primary" onClick={this.handleReset}>
+            <Button
+              variant="light"
+              className="success"
+              onClick={this.handleReset}
+            >
               Restart
             </Button>
           </Modal.Footer>
@@ -216,7 +224,7 @@ class App extends Component {
   }
 
   render() {
-    console.log("the word is " + this.state.answer)
+    console.log("the word is " + this.state.answer);
     return (
       <div>
         <Row>

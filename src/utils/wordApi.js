@@ -7,12 +7,6 @@ function isWord(word) {
   const xhr = new XMLHttpRequest();
   xhr.withCredentials = true;
   
-  xhr.addEventListener("readystatechange", function () {
-    if (this.readyState === this.DONE) {
-      console.log(this.responseText);
-    }
-  });
-  
   xhr.open("GET", `https://wordsapiv1.p.rapidapi.com/words/${word}/pertainsTo`, false);
   xhr.setRequestHeader("x-rapidapi-host", "wordsapiv1.p.rapidapi.com");
   xhr.setRequestHeader("x-rapidapi-key", key);
