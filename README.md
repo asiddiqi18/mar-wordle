@@ -1,3 +1,8 @@
+
+![wordle screenshot](https://i.imgur.com/HFDv0Nr.png)
+
+This is a clone of the popular word game, [Wordle](https://www.powerlanguage.co.uk/wordle/)
+
 # Getting Started with Create React App
 
 This project was bootstrapped with [Create React App](https://github.com/facebook/create-react-app).
