@@ -1,7 +1,8 @@
 
 ![wordle screenshot](https://i.imgur.com/HFDv0Nr.png)
 
-This is a clone of the popular word game, [Wordle](https://www.powerlanguage.co.uk/wordle/)
+This is a clone of the popular word game [Wordle](https://www.powerlanguage.co.uk/wordle/) I created as an exercise to learn React.
+
 
 # Getting Started with Create React App
 
