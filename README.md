@@ -1,4 +1,19 @@
-# Getting Started with Create React App
+# Wordle
+
+![wordle screenshot](https://i.imgur.com/HFDv0Nr.png)
+
+This is a clone of the popular word game [Wordle](https://www.powerlanguage.co.uk/wordle/) I created as an exercise to learn React.
+
+This project is not intended to be deployed on a web server, as this is solely a client-side application.
+
+## Tools Used:
+[WordsAPI](https://rapidapi.com/dpventures/api/wordsapi/) was used to check if submitted words were valid or not.
+
+[Bootstrap](https://getbootstrap.com/docs/5.0/getting-started/introduction/)/[React-Bootstrap](https://react-bootstrap.github.io/) were used for front-end styling.
+
+[Owen Yi at Medium](https://medium.com/@owenyin/here-lies-wordle-2021-2027-full-answer-list-52017ee99e86) compiled the potential pool of answers from Wordle.
+
+## Getting Started with Create React App
 
 This project was bootstrapped with [Create React App](https://github.com/facebook/create-react-app).
 
