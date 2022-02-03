@@ -120,13 +120,6 @@ class App extends Component {
     console.log("Handling enter...");
     let enteredGuess = this.state.board[this.state.guessNumber].guess;
 
-    if (enteredGuess === this.state.answer) {
-      super.setState({ gameWon: true });
-      this.showModal();
-    } else if (this.state.guessNumber == 4) {
-      this.showModal();
-    }
-
     if (enteredGuess.length !== 5) {
       this.setAlertShown(true, "Not enough letters");
       return;
@@ -143,6 +136,13 @@ class App extends Component {
     if (!isWord(enteredGuess)) {
       this.setAlertShown(true, "Not a valid word");
       return;
+    }
+
+    if (enteredGuess === this.state.answer) {
+      super.setState({ gameWon: true });
+      this.showModal();
+    } else if (this.state.guessNumber == 4) {
+      this.showModal();
     }
 
     this.setState({ guessNumber: this.state.guessNumber + 1 });
@@ -186,11 +186,11 @@ class App extends Component {
             <h3 className="text-center">Congrats! You won!</h3>
             <div className="row">
               <p className="text-center">
-                You guessed the word {this.state.answer} in {this.state.guessNumber}{" "}
-                guesses.
+                You guessed the word {this.state.answer} in{" "}
+                {this.state.guessNumber} guesses.
               </p>
             </div>
-            <div class="row mt-5">
+            <div className="row mt-5">
               <Button
                 variant="light"
                 className="success shadow"
@@ -223,38 +223,73 @@ class App extends Component {
     }
   }
 
+  invalidToast() {
+    return (
+      <Row>
+        <Col xs={6}>
+          <ToastContainer className="m-3" position="top-center">
+            <Toast
+              onClose={() => this.setAlertShown(false)}
+              show={this.state.alertDisplayed}
+              delay={3000}
+              autohide
+            >
+              <Toast.Body>{this.state.alertMsg}</Toast.Body>
+            </Toast>
+          </ToastContainer>
+        </Col>
+      </Row>
+    );
+  }
+
+  gameOverToast() {
+    return (
+      <ToastContainer className="p-3" position="bottom-end">
+        <Toast show={this.state.gameWon}>
+          <Toast.Body>
+            <div className="d-flex justify-content-center align-items-center">
+              <div className="p-2 flex-fill ">
+                <strong className="me-auto ">Game Over!</strong>
+                <br />
+                <small>
+                  The word was{" "}
+                  <strong>{this.state.answer.toLowerCase()}</strong>
+                </small>
+              </div>
+              <div className="p-2 flex-fill ">
+                <Button
+                variant="light"
+                className="float-end success shadow"
+                onClick={this.handleReset}
+              >
+                Restart
+              </Button>
+              </div>
+            </div>
+          </Toast.Body>
+        </Toast>
+      </ToastContainer>
+    );
+  }
+
   render() {
     console.log("the word is " + this.state.answer);
     return (
       <div>
-        <Row>
-          <Col xs={6}>
-            <ToastContainer className="m-3" position="top-center">
-              <Toast
-                onClose={() => this.setAlertShown(false)}
-                show={this.state.alertDisplayed}
-                delay={3000}
-                autohide
-              >
-                <Toast.Body>{this.state.alertMsg}</Toast.Body>
-              </Toast>
-            </ToastContainer>
-          </Col>
-        </Row>
-
+        {this.invalidToast()}
         {this.gameOverModal()}
 
-        <div class="d-flex align-items-center justify-content-center flex-column min-vh-100">
+        <div className="d-flex align-items-center justify-content-center flex-column min-vh-100">
           <div className="mt-5">
             <h1 className="text-center title">Mar's Wordle</h1>
           </div>
-          <div class="mt-auto">
+          <div className="mt-auto">
             <Board
               board={this.state.board}
               guessNumber={this.state.guessNumber}
             ></Board>
           </div>
-          <div class="mt-auto bottom-margin">
+          <div className="mt-auto bottom-margin">
             <Keyboard
               onKeyPress={this.handleKeyPress}
               onBackSpace={this.handleBackspace}
@@ -263,6 +298,7 @@ class App extends Component {
             ></Keyboard>
           </div>
         </div>
+        {this.gameOverToast()}
       </div>
     );
   }
