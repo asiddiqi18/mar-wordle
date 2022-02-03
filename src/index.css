@@ -2,7 +2,8 @@
   background-color: #d9d9d9 !important;
 }
 
-@media (min-width: 300px) {
+/* big screen */
+@media (min-width: 300px) { 
   .btn-key {
     width: 60px !important;
     height: 60px !important;
@@ -14,26 +15,58 @@
     width: 84px !important;
     height: 60px !important;
   }
+
+  .tile {
+    font-size: 34px;
+    width: 75px !important;
+    height: 75px !important;
+    line-height: 75px;
+    border-radius: 7px;
+  }
+
+  .title {
+    font-family: "JetBrains Mono", monospace;
+    font-size: 50px;
+    font-weight: 800;
+  }
+
 }
 
+/* small screen */
 @media (max-width: 768px) {
   .btn-key {
-    width: 21px !important;
-    padding-left: 13px !important;
-    padding-right: 13px !important;
-    margin: 2px !important;
+    width: 15px !important;
     height: 47px !important;
-    font-size: 9px !important;
+    padding-left: 12px !important;
+    padding-right: 16px !important;
+    margin-right: 5px !important;
+    margin: 2px 2px 2px 2px !important;
+    font-size: 12px !important;
     filter: drop-shadow(0 0.2rem 0.25rem rgba(0, 0, 0, 0.2));
   }
 
   .btn-special {
-    width: 55px !important;
+    width: 50px !important;
     height: 47px !important;
     padding-left: 10px !important;
     padding-right: 10px !important;
     font-size: small !important;
   }
+
+  .tile {
+    font-size: 18px;
+    width: 50px !important;
+    height: 50px !important;
+    line-height: 50px;
+    border-radius: 7px;
+  }
+
+  .title {
+    font-family: "JetBrains Mono", monospace;
+    font-size: 40px;
+    font-weight: 800;
+  }
+
 }
 
 .guess-row {
@@ -69,14 +102,9 @@
   margin-bottom: 8%;
 }
 
-.tile {
+.tile-style {
   border: 1px solid black;
-  font-size: 34px;
-  width: 75px !important;
-  height: 75px !important;
-  line-height: 75px;
   text-align: center;
-  border-radius: 7px;
   font-family: "JetBrains Mono", monospace;
   box-shadow: 1px 1px 1px 1px rgba(0, 0, 0, 0.1);
 }
@@ -96,12 +124,6 @@ body {
     rgba(158, 46, 255, 0.541036482952556) 0%,
     rgba(49, 220, 255, 0.5970588919161415) 100%
   );
-}
-
-.title {
-  font-family: "JetBrains Mono", monospace;
-  font-size: 50px;
-  font-weight: 800;
 }
 
 .shadow {

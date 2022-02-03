@@ -227,7 +227,7 @@ class App extends Component {
     return (
       <Row>
         <Col xs={6}>
-          <ToastContainer className="m-3" position="top-center">
+          <ToastContainer className="mt-2" position="top-center">
             <Toast
               onClose={() => this.setAlertShown(false)}
               show={this.state.alertDisplayed}
