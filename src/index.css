@@ -3,7 +3,7 @@
 }
 
 /* big screen */
-@media (min-width: 300px) { 
+@media (min-width: 1000px) { 
   .btn-key {
     width: 60px !important;
     height: 60px !important;
@@ -21,6 +21,36 @@
     width: 75px !important;
     height: 75px !important;
     line-height: 75px;
+    border-radius: 7px;
+  }
+
+  .title {
+    font-family: "JetBrains Mono", monospace;
+    font-size: 50px;
+    font-weight: 800;
+  }
+
+}
+
+/* medium screen */
+@media (max-width: 1000px) { 
+  .btn-key {
+    width: 50px !important;
+    height: 50px !important;
+    margin: 4px !important;
+    filter: drop-shadow(0 0.18rem 0.18rem rgba(0, 0, 0, 0.2));
+  }
+
+  .btn-special {
+    width: 74px !important;
+    height: 50px !important;
+  }
+
+  .tile {
+    font-size: 30px;
+    width: 63px !important;
+    height: 63px !important;
+    line-height: 63px;
     border-radius: 7px;
   }
 
