@@ -1,6 +1,7 @@
 import React, { Component, useState, useEffect } from "react";
 import Board from "./board";
 import Keyboard from "./keyboard";
+import ActionPanel from "./actionPanel";
 import {
   Button,
   Modal,
@@ -85,13 +86,6 @@ class App extends Component {
       return;
     }
 
-    console.log(`Key pressed: ${letter}`);
-    console.log(
-      `Guess length: ${
-        this.state.board[this.state.guessNumber].guess.length
-      } Guess number: ${this.state.guessNumber}`
-    );
-
     if (this.state.board[this.state.guessNumber].guess.length !== 5) {
       this.state.board[this.state.guessNumber].guess += letter;
       super.setState(this.state.board);
@@ -100,16 +94,13 @@ class App extends Component {
 
   handleBackspace() {
     if (this.state.guessNumber == 5) {
-      console.log("Out of guesses ");
       return;
     }
 
-    console.log("Handling back space...");
     this.state.board[this.state.guessNumber].guess = this.state.board[
       this.state.guessNumber
     ].guess.slice(0, -1);
     super.setState({ board: this.state.board });
-    console.log(this.state);
   }
 
   handleEnter() {
@@ -117,7 +108,6 @@ class App extends Component {
       return;
     }
 
-    console.log("Handling enter...");
     let enteredGuess = this.state.board[this.state.guessNumber].guess;
 
     if (enteredGuess.length !== 5) {
@@ -145,13 +135,11 @@ class App extends Component {
       this.showModal();
     }
 
-    this.setState({ guessNumber: this.state.guessNumber + 1 });
-    console.log("Pushing to board...");
-
+    
     var resultsList = [];
-
+    
     let wordSet = new Set(this.state.answer.split(""));
-
+    
     for (let index = 0; index < 5; index++) {
       if (enteredGuess[index] === this.state.answer[index]) {
         // success
@@ -167,13 +155,13 @@ class App extends Component {
         resultsList.push("wrong");
       }
     }
-
+    
     this.state.board[this.state.guessNumber].match = resultsList;
+    this.setState({ guessNumber: this.state.guessNumber + 1 });
     super.setState(this.state.board);
   }
 
   handleReset() {
-    console.log("TEST");
     this.hideModal();
     this.resetBuilder();
   }
@@ -226,6 +214,11 @@ class App extends Component {
   invalidToast() {
     return (
       <Row>
+        <ActionPanel
+          onKeyPress={this.handleKeyPress}
+          onBackSpace={this.handleBackspace}
+          onEnter={this.handleEnter}
+        />
         <Col xs={6}>
           <ToastContainer className="mt-2" position="top-center">
             <Toast
@@ -243,9 +236,12 @@ class App extends Component {
   }
 
   gameOverToast() {
+    if (!this.state.gameWon) {
+      return;
+    }
     return (
       <ToastContainer className="p-3" position="bottom-end">
-        <Toast show={this.state.gameWon}>
+        <Toast show={this.state.gameWon} animation={false}>
           <Toast.Body>
             <div className="d-flex justify-content-center align-items-center">
               <div className="p-2 flex-fill ">
@@ -258,12 +254,12 @@ class App extends Component {
               </div>
               <div className="p-2 flex-fill ">
                 <Button
-                variant="light"
-                className="float-end success shadow"
-                onClick={this.handleReset}
-              >
-                Restart
-              </Button>
+                  variant="light"
+                  className="float-end success shadow"
+                  onClick={this.handleReset}
+                >
+                  Restart
+                </Button>
               </div>
             </div>
           </Toast.Body>
