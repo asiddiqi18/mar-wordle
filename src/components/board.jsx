@@ -8,27 +8,33 @@ class Board extends Component {
     // console.log("addPadding: ");
     var paddedList = [];
 
+    const { board, guessNumber } = this.props;
 
-    for (let index = 0; index < this.props.guessNumber; index++) {
-      paddedList.push({guess: this.props.board[index].guess, match: this.props.board[index].match})
+    for (let index = 0; index < guessNumber; index++) {
+      paddedList.push({
+        guess: board[index].guess,
+        match: board[index].match,
+      });
     }
 
-    if (this.props.guessNumber == 5) {
-      return paddedList
+    if (guessNumber == 5) {
+      return paddedList;
     }
 
-    let latestGuess = this.props.board[this.props.guessNumber].guess
-    let lengthOfLatestGuess = latestGuess.length
-    paddedList.push({guess: latestGuess += " ".repeat(5 - lengthOfLatestGuess), match: []})
+    let latestGuess = board[guessNumber].guess;
+    let lengthOfLatestGuess = latestGuess.length;
+    paddedList.push({
+      guess: (latestGuess += " ".repeat(5 - lengthOfLatestGuess)),
+      match: [],
+    });
 
-    for (let index = this.props.guessNumber + 1; index < 5; index++) {
-      paddedList.push({guess: " ".repeat(5), match: []})
+    for (let index = guessNumber + 1; index < 5; index++) {
+      paddedList.push({ guess: " ".repeat(5), match: [] });
     }
 
     // console.log(paddedList)
 
     return paddedList;
-
   }
 
   render() {

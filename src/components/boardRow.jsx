@@ -8,19 +8,21 @@ class BoardRow extends Component {
   addColor() {
     let items = [];
 
+    const { word } = this.props;
+
     _.times(5, (i) => {
-      switch (this.props.word.match[i]) {
+      switch (word.match[i]) {
         case "success":
           items.push(
             <div key={i} className="tile tile-style shadow success">
-              {this.props.word.guess[i]}
+              {word.guess[i]}
             </div>
           );
           break;
         case "partial":
           items.push(
             <div key={i} className="tile tile-style shadow partial">
-              {this.props.word.guess[i]}
+              {word.guess[i]}
             </div>
           );
 
@@ -28,7 +30,7 @@ class BoardRow extends Component {
         case "wrong":
           items.push(
             <div key={i} className="tile tile-style shadow wrong">
-              {this.props.word.guess[i]}
+              {word.guess[i]}
             </div>
           );
 
@@ -36,7 +38,7 @@ class BoardRow extends Component {
         default:
           items.push(
             <div key={i} className="tile tile-style">
-              {this.props.word.guess[i]}
+              {word.guess[i]}
             </div>
           );
 
@@ -48,11 +50,7 @@ class BoardRow extends Component {
   }
 
   render() {
-    return (
-      <div className="grid-container">
-        {this.addColor()}
-      </div>
-    );
+    return <div className="grid-container">{this.addColor()}</div>;
   }
 }
 
