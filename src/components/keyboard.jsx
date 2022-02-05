@@ -2,11 +2,11 @@ import React, { Component } from "react";
 import Key from "./key";
 
 const Keyboard = (props) => {
-
   const { charStatus, onKeyPress, onBackSpace, onEnter } = props;
   const topRow = ["Q", "W", "E", "R", "T", "Y", "U", "I", "O", "P"];
   const midRow = ["A", "S", "D", "F", "G", "H", "J", "K", "L"];
   const bottomRow = ["back", "Z", "X", "C", "V", "B", "N", "M", "enter"];
+  const keyboardRows = [topRow, midRow, bottomRow];
 
   const getStatus = (char) => {
     if (charStatus.successChars.includes(char)) {
@@ -24,52 +24,23 @@ const Keyboard = (props) => {
     <React.Fragment>
       <table>
         <tbody className="d-flex flex-column align-items-center justify-content-center">
-          <tr className="keyboard-row ">
-            {topRow.map((char) => (
-              <td className="align-middle">
-                <Key
-                  key={char.id}
-                  letter={char}
-                  onKeyPress={onKeyPress}
-                  onBackSpace={onBackSpace}
-                  status={getStatus(char)}
-                >
-                  {char}
-                </Key>
-              </td>
-            ))}
-          </tr>
-          <tr className="keyboard-row">
-            {midRow.map((char) => (
-              <td>
-                <Key
-                  key={char.id}
-                  letter={char}
-                  onKeyPress={onKeyPress}
-                  onBackSpace={onBackSpace}
-                  status={getStatus(char)}
-                >
-                  {char}
-                </Key>
-              </td>
-            ))}
-          </tr>
-          <tr className="keyboard-row">
-            {bottomRow.map((char) => (
-              <td>
-                <Key
-                  key={char.id}
-                  letter={char}
-                  onKeyPress={onKeyPress}
-                  onBackSpace={onBackSpace}
-                  onEnter={onEnter}
-                  status={getStatus(char)}
-                >
-                  {char}
-                </Key>
-              </td>
-            ))}
-          </tr>
+          {keyboardRows.map((row) => (
+            <tr className="keyboard-row ">
+              {row.map((char) => (
+                <td className="align-middle">
+                  <Key
+                    key={char.id}
+                    letter={char}
+                    onKeyPress={onKeyPress}
+                    onBackSpace={onBackSpace}
+                    status={getStatus(char)}
+                  >
+                    {char}
+                  </Key>
+                </td>
+              ))}
+            </tr>
+          ))}
         </tbody>
       </table>
     </React.Fragment>
