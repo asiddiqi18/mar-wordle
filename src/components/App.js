@@ -2,6 +2,8 @@ import React, { Component, useState, useEffect } from "react";
 import Board from "./board";
 import Keyboard from "./keyboard";
 import ActionPanel from "./actionPanel";
+import _ from "lodash";
+
 import {
   Button,
   Modal,
@@ -30,30 +32,20 @@ class App extends Component {
     this.setState(this.initialState);
   }
 
+  getEmptyBoard() {
+    var emptyBoard = [];
+    _.times(5, (i) => {
+      emptyBoard.push({
+        guess: "",
+        match: [],
+      });
+    });
+    return emptyBoard;
+  }
+
   get initialState() {
     return {
-      board: [
-        {
-          guess: "",
-          match: [],
-        },
-        {
-          guess: "",
-          match: [],
-        },
-        {
-          guess: "",
-          match: [],
-        },
-        {
-          guess: "",
-          match: [],
-        },
-        {
-          guess: "",
-          match: [],
-        },
-      ],
+      board: this.getEmptyBoard(),
       guessNumber: 0,
       gameOverModalDisplayed: false,
       alertDisplayed: false,
@@ -76,7 +68,7 @@ class App extends Component {
     this.setState({ gameOverModalDisplayed: false });
   }
 
-  setAlertShown(bool, msg) {
+  showAlert(bool, msg) {
     this.setState({ alertMsg: msg });
     this.setState({ alertDisplayed: bool });
   }
@@ -108,57 +100,58 @@ class App extends Component {
       return;
     }
 
-    let enteredGuess = this.state.board[this.state.guessNumber].guess;
+    const { board, guessNumber, answer, charStatus } = this.state;
+
+    let enteredGuess = board[guessNumber].guess;
 
     if (enteredGuess.length !== 5) {
-      this.setAlertShown(true, "Not enough letters");
+      this.showAlert(true, "Not enough letters");
       return;
     }
 
-    for (let index = 0; index < this.state.guessNumber; index++) {
-      const prevGuess = this.state.board[index].guess;
+    for (let index = 0; index < guessNumber; index++) {
+      const prevGuess = board[index].guess;
       if (prevGuess === enteredGuess) {
-        this.setAlertShown(true, "You have already guessed this");
+        this.showAlert(true, "You have already guessed this");
         return;
       }
     }
 
     if (!isWord(enteredGuess)) {
-      this.setAlertShown(true, "Not a valid word");
+      this.showAlert(true, "Not a valid word");
       return;
     }
 
-    if (enteredGuess === this.state.answer) {
+    if (enteredGuess === answer) {
       super.setState({ gameWon: true });
       this.showModal();
-    } else if (this.state.guessNumber == 4) {
+    } else if (guessNumber == 4) {
       this.showModal();
     }
 
-    
     var resultsList = [];
-    
-    let wordSet = new Set(this.state.answer.split(""));
-    
+
+    let wordSet = new Set(answer.split(""));
+
     for (let index = 0; index < 5; index++) {
-      if (enteredGuess[index] === this.state.answer[index]) {
+      if (enteredGuess[index] === answer[index]) {
         // success
-        this.state.charStatus.successChars.push(enteredGuess[index]);
+        charStatus.successChars.push(enteredGuess[index]);
         resultsList.push("success");
       } else if (wordSet.has(enteredGuess[index])) {
         // partial
-        this.state.charStatus.partialChars.push(enteredGuess[index]);
+        charStatus.partialChars.push(enteredGuess[index]);
         resultsList.push("partial");
       } else {
         // fail
-        this.state.charStatus.wrongChars.push(enteredGuess[index]);
+        charStatus.wrongChars.push(enteredGuess[index]);
         resultsList.push("wrong");
       }
     }
-    
-    this.state.board[this.state.guessNumber].match = resultsList;
-    this.setState({ guessNumber: this.state.guessNumber + 1 });
-    super.setState(this.state.board);
+
+    board[guessNumber].match = resultsList;
+    this.setState({ guessNumber: guessNumber + 1 });
+    super.setState({ board: board });
   }
 
   handleReset() {
@@ -222,7 +215,7 @@ class App extends Component {
         <Col xs={6}>
           <ToastContainer className="mt-2" position="top-center">
             <Toast
-              onClose={() => this.setAlertShown(false)}
+              onClose={() => this.showAlert(false)}
               show={this.state.alertDisplayed}
               delay={3000}
               autohide
@@ -236,7 +229,7 @@ class App extends Component {
   }
 
   gameOverToast() {
-    if (!this.state.gameWon) {
+    if (!this.state.gameWon || this.state.gameOverModalDisplayed) {
       return;
     }
     return (
