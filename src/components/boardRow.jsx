@@ -2,13 +2,11 @@ import React, { Component } from "react";
 
 import _ from "lodash";
 
-class BoardRow extends Component {
-  state = {};
+const BoardRow = (props) => {
+  const { word } = props;
 
-  addColor() {
+  const addColor = () => {
     let items = [];
-
-    const { word } = this.props;
 
     _.times(5, (i) => {
       switch (word.match[i]) {
@@ -47,11 +45,9 @@ class BoardRow extends Component {
     });
 
     return items;
-  }
+  };
 
-  render() {
-    return <div className="grid-container">{this.addColor()}</div>;
-  }
-}
+  return <div className="grid-container">{addColor()}</div>;
+};
 
 export default BoardRow;

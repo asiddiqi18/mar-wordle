@@ -32,8 +32,6 @@ class Board extends Component {
       paddedList.push({ guess: " ".repeat(5), match: [] });
     }
 
-    // console.log(paddedList)
-
     return paddedList;
   }
 

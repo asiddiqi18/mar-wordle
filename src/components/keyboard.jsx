@@ -34,6 +34,7 @@ const Keyboard = (props) => {
                     onKeyPress={onKeyPress}
                     onBackSpace={onBackSpace}
                     status={getStatus(char)}
+                    onEnter={onEnter}
                   >
                     {char}
                   </Key>
